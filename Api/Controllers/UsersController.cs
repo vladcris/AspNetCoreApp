@@ -5,15 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Api.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
         public UsersController(DataContext context)
@@ -26,9 +25,11 @@ namespace Api.Controllers
         {
             var users = await _context.Users.ToListAsync();
             return users;
+
         } 
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<AppUser>> GetUserById(int id)
         {
             var user = await _context.Users.FindAsync(id);
