@@ -21,6 +21,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        //[Authorize]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()  ///List offers to many features
         {
             var users = await _context.Users.ToListAsync();
@@ -29,7 +30,7 @@ namespace Api.Controllers
         } 
 
         [HttpGet("{id:int}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<AppUser>> GetUserById(int id)
         {
             var user = await _context.Users.FindAsync(id);
